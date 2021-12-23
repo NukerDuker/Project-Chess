@@ -22,7 +22,7 @@ public class Horse  extends ChessPiece{
 
     @Override
     public String getSymbol() {
-        return "Horse";
+        return "H";
     }
 
     private boolean checkPos(int pos) {
