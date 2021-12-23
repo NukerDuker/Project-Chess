@@ -4,7 +4,7 @@ public class Main{
         ChessBoard board = new ChessBoard("White");
         board.board[3][4] = test;
         board.printBoard();
-        System.out.println(board.moveToPosition(3, 4,4,4));
+        System.out.println(board.moveToPosition(3, 4,2,4));
         board.printBoard();
     }
 }

@@ -1,4 +1,4 @@
-public class Pawn  extends ChessPiece{
+public class Pawn extends ChessPiece {
 
     public Pawn(String color) {
         super(color);
@@ -11,15 +11,34 @@ public class Pawn  extends ChessPiece{
 
     @Override
     public boolean canMoveToPosition(ChessBoard chessBoard, int line, int column, int toLine, int toColumn) {
-        if (checkPos(line) && checkPos(column) && checkPos(toLine) && checkPos(toColumn)){
-            if(line != toLine ){
-                if(((color.equals("White") || (color.equals("Black"))) && line == 1)) {
-                    return ((toLine == line + 2) || (toLine == line + 1));
-                } else if ((color.equals("White")) || (color.equals("Black"))){
-                    return toLine == line + 1;
+        if (checkPos(line) && checkPos(column) && checkPos(toLine) && checkPos(toColumn) && chessBoard.board[line][column] != null) {
+            if (column == toColumn) { //check that we want to eat
+                int dir;
+                int start;
+
+                if (color.equals("White")) {
+                    dir = 1;
+                    start = 1;
+                } else { //for black peace
+                    dir = -1;
+                    start = 6;
                 }
-            } else return false;
-        } return false;
+
+                if (line + dir == toLine) {
+                    return chessBoard.board[toLine][toColumn] == null;
+                }
+
+                if (line == start && line + 2 * dir == toLine) {
+                    return chessBoard.board[toLine][toColumn] == null && chessBoard.board[line + dir][column] == null;
+                }
+
+            } else { //want to eat
+                if ((column - toColumn == 1 || column - toColumn == -1) && (line - toLine == 1 || line - toLine == -1) && chessBoard.board[toLine][toColumn] != null) {
+                    return !chessBoard.board[toLine][toColumn].getColor().equals(color);
+                } else return false;
+            }
+        }
+        return false;
     }
 
     @Override
